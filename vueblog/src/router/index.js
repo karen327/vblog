@@ -8,6 +8,12 @@ import DataCharts from '@/components/DataCharts'
 import PostArticle from '@/components/PostArticle'
 import UserMana from '@/components/UserMana'
 import BlogDetail from '@/components/BlogDetail'
+import MyHome from "@/components/MyHome"
+import MyInfo from "@/components/MyInfo"
+import MyBlogList from "@/components/MyBlogList"
+import MyStars from "@/components/MyStars"
+import RecentViews from "@/components/RecentViews"
+import PersonalSettings from "@/components/PersonalSettings"
 
 Vue.use(Router)
 
@@ -96,6 +102,71 @@ export default new Router({
           iconCls: 'fa fa-bar-chart',
           name: '数据统计',
           component: DataCharts
+        }
+      ]
+    }, {
+      path: '/personal',
+      component: MyHome,
+      name: '',
+      hidden: true
+    }, {
+      path: '/personal',
+      component: MyHome,
+      name: '个人资料',
+      children: [
+        {
+          path: '/info',
+          iconCls: 'fa fa-user',
+          name: '个人资料',
+          component: MyInfo,
+        }
+      ]
+    }, {
+      path: '/personal',
+      component: MyHome,
+      name: '我的博客',
+      children: [
+        {
+          path: '/blogTable',
+          iconCls: 'fa fa-book',
+          name: '我的博客',
+          component: MyBlogList,
+        }
+      ]
+    }, {
+      path: '/personal',
+      component: MyHome,
+      name: '我的收藏',
+      children: [
+        {
+          path: '/star',
+          iconCls: 'fa fa-bookmark',
+          name: '我的收藏',
+          component: MyStars
+        }
+      ]
+    }, {
+      path: '/personal',
+      component: MyHome,
+      name: '最近浏览',
+      children: [
+        {
+          path: '/recentviews',
+          iconCls: 'fa fa-eye',
+          name: '最近浏览',
+          component: RecentViews
+        }
+      ]
+    }, {
+      path: '/personal',
+      component: MyHome,
+      name: '个人设置',
+      children: [
+        {
+          path: '/settings',
+          iconCls: 'fa fa-gear',
+          name: '个人设置',
+          component: PersonalSettings,
         }
       ]
     }

@@ -19,7 +19,6 @@
       <el-button type="primary" icon="el-icon-search" size="mini" style="margin-left: 3px" @click="searchClick">搜索
       </el-button>
     </div>
-    <!--<div style="width: 100%;height: 1px;background-color: #20a0ff;margin-top: 8px;margin-bottom: 0px"></div>-->
     <el-table
       ref="multipleTable"
       :data="articles"
@@ -42,6 +41,7 @@
         <template slot-scope="scope">{{ scope.row.editTime | formatDateTime}}</template>
       </el-table-column>
       <el-table-column
+        v-if="isManager"
         prop="nickname"
         label="作者"
         width="120" align="left">
@@ -103,6 +103,15 @@
         dustbinData: []
       }
     },
+    // computed: {     
+    //   filteredArticles() {
+    //     return this.articles
+    //     // if (this.isManager) {
+    //     //   return this.articles
+    //     // }
+    //     // return this.articles.filter(article => article.nickname === "江南一点雨")
+    //   },
+    // },
     mounted: function () {
       var _this = this;
       this.loading = true;
@@ -239,6 +248,6 @@
         });
       }
     },
-    props: ['state', 'showEdit', 'showDelete', 'activeName', 'showRestore']
+    props: ['isManager', 'state', 'showEdit', 'showDelete', 'activeName', 'showRestore']
   }
 </script>
