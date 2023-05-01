@@ -1,10 +1,8 @@
 <template>
   <div class="profile-page">
     <div class="profile-header">
-      <!-- <el-avatar class="profile-avatar" src="../assets/logo.png"></el-avatar> -->
       <el-avatar class="profile-avatar"></el-avatar>
-      <h1 class="profile-name">{{ name }}</h1>
-      <!-- <h1 class="profile-name">{{ currentUserName }}</h1> -->
+      <h1 class="profile-name">{{ currentUserName }}</h1>
       <h2 class="profile-title">{{ title }}</h2>
       <div class="user_num">
         <div style="cursor: pointer" @click="myfan">
@@ -83,35 +81,45 @@ import {
   faInstagram
 } from "@fortawesome/free-brands-svg-icons";
 
+import {getRequest} from '../utils/api'
 export default {
   name: "ProfilePage",
-  // props: {
-  //   userName: String
-  // },
   components: {
     FontAwesomeIcon
   },
-  // mounted: function () {
-  //   var _this = this;
-  //   getRequest("/currentUserName").then(function (msg) {
-  //     _this.currentUserName = msg.data;
-  //   }, function (msg) {
-  //     _this.currentUserName = '游客';
-  //   });
-  // },
+  methods: {
+      handleCommand(command){
+        var _this = this;
+        if (command == 'logout') {
+          this.$confirm('注销登录吗?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(function () {
+            getRequest("/logout")
+            _this.currentUserName = '游客';
+            _this.$router.replace({path: '/'});
+          }, function () {
+            //取消
+          })
+        }
+        if (command == 'home') {
+          getRequest("/home")
+          _this.$router.push({path: '/home'})
+        }
+      }
+    },
   mounted: function () {
     var _this = this;
     getRequest("/currentUserName").then(function (msg) {
       _this.currentUserName = msg.data;
-      console.log("Current user name:", _this.currentUserName);
     }, function (msg) {
       _this.currentUserName = '游客';
-      console.log("Error getting current user name:", msg);
     });
   },
   data() {
     return {
-      name: "江南一点雨",
+      currentUserName: '',
       title: "这个人很懒，什么都没有留下。",
       about: "富强民主和谐自由平等公正法治爱国敬业诚信友善富强民主和谐自由平等公正法治爱国敬业诚信友善",
       email: "1234567@gmail.com",
@@ -180,15 +188,6 @@ export default {
   margin-top: 0px;
   margin-bottom: 100px;
 }
-
-/* .profile-avatar {
-  width: 150px;
-  height: 150px;
-  background-image: url('../assets/avatar.jpg'); 
-  background-size: cover;
-  margin-top: 10px;
-  margin-bottom: 0px;
-} */
 
 .profile-avatar {
   width: 150px;
