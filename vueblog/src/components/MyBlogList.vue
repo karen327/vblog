@@ -24,14 +24,21 @@ import {deleteRequest} from '../utils/api'
 import {getRequest} from '../utils/api'
 import '@/styles/reset.css'
 export default {
-  mounted: function () {
-    var _this = this;
+  // mounted: function () {
+  //   var _this = this;
+  //   getRequest("/isAdmin").then(resp=> {
+  //     if (resp.status == 200) {
+  //       _this.isAdmin = resp.data;
+  //     }
+  //   })
+  // },
+  created() {
     getRequest("/isAdmin").then(resp=> {
       if (resp.status == 200) {
-        _this.isAdmin = resp.data;
+        this.isAdmin = resp.data;
       }
-    })
-  },
+    });
+  },  //gpt声称用这段代替mounted那段可以避免渲染延迟然而并没有
   data() {
     return {
       activeName: 'post',
@@ -45,7 +52,7 @@ export default {
   },
   components: {
     'blog_flow': MyBlogFlow,
-    'blog_cfg': BlogCfg
+    // 'blog_cfg': BlogCfg
   }
 };
 </script>
@@ -61,7 +68,7 @@ export default {
 .blog_flow > .main {
   /*justify-content: flex-start;*/
   display: flex;
-  round-clip: 10px;
+  border-radius: 10px;
   flex-direction: column;
   padding-left: 0px;
   background-color: #fff;
